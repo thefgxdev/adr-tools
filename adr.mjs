@@ -3,9 +3,10 @@
 // Usage: node adr.mjs new "Title" | node adr.mjs list | node adr.mjs supersede <old> <new>
 import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const DIR = process.env.ADR_DIR || path.join(process.cwd(), 'docs', 'adr');
-const TEMPLATE = path.join(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')), 'TEMPLATE.md');
+const TEMPLATE = path.join(path.dirname(fileURLToPath(import.meta.url)), 'TEMPLATE.md');
 const [cmd, ...args] = process.argv.slice(2);
 
 const slug = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
